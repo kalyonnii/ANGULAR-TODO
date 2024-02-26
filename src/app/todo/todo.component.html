@@ -1,0 +1,131 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div class="card">
+        <div class="form" [formGroup]="todoForm">
+          <div class="form-floating m-3">
+            <input
+              formControlName="item"
+              type="name"
+              class="form-control"
+              id="floatingInput"
+              placeholder="Add Task Name"
+            />
+            <label for="floatingInput">Task Name</label>
+          </div>
+          <div
+            class="col-12 d-flex justify-content-center align-items-center mb-3"
+          >
+            <button
+              *ngIf="!isEditEnabled"
+              (click)="addTask()"
+              type="button"
+              class="btn btn-outline-secondary"
+              [disabled]="todoForm.invalid"
+            >
+              ADD
+            </button>
+            <button
+              *ngIf="isEditEnabled"
+              (click)="updateTask()"
+              type="button"
+              class="btn btn-outline-secondary"
+              [disabled]="todoForm.invalid"
+            >
+              UPDATE
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div cdkDropListGroup>
+        <div class="row">
+          <div class="col-md-4">
+            <!-- todo  -->
+            <div class="example-container text-center">
+              <h2 class="head-title">TO DO<span *ngIf="tasks.length>0"> -{{tasks.length}}</span></h2>
+
+              <div
+                cdkDropList
+                [cdkDropListData]="tasks"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)"
+              >
+                <div
+                  class="example-box"
+                  *ngFor="let item of tasks; let i = index"
+                  cdkDrag
+                >
+                  {{ item.description }}
+                  <div class="box">
+                    <button style="color: red" (click)="deleteTask(i)">
+                      <i class="las la-trash"></i></button
+                    >&nbsp;
+                    <button style="color: blue" (click)="onEdit(item, i)">
+                      <i class="las la-pen"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <!-- inprogress -->
+            <div class="example-container text-center">
+              <h2 class="head-title">IN PROGRESS<span *ngIf="inprogress.length>0">-{{inprogress.length}}</span></h2>
+
+              <div
+                cdkDropList
+                [cdkDropListData]="inprogress"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)"
+              >
+                <div
+                  class="example-box"
+                  *ngFor="let item of inprogress; let i = index"
+                  cdkDrag
+                >
+                  {{ item.description }}
+                  <div class="box">
+                    <button style="color: red" (click)="deleteInProgress(i)">
+                      <i class="las la-trash"></i></button
+                    >&nbsp;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <!-- done -->
+            <div class="example-container text-center">
+              <h2 class="head-title">DONE<span *ngIf="done.length>0">-{{done.length}}</span></h2>
+              <div
+                cdkDropList
+                [cdkDropListData]="done"
+                class="example-list"
+                (cdkDropListDropped)="drop($event)"
+              >
+                <div
+                  class="example-box"
+                  *ngFor="let item of done; let i = index"
+                  cdkDrag
+                >
+                  {{ item.description }}
+                  <div class="box">
+                    <button style="color: red" (click)="deleteDone(i)">
+                      <i class="las la-trash"></i></button
+                    >&nbsp;
+                    <button style="color: green">
+                      <i class="las la-check-circle"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
